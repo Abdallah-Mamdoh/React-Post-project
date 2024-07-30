@@ -13,16 +13,16 @@ export default function Home({posts , handleDelete, form,handleEdit,userName,Loa
 
 
     return (
-    <div className={classes[0]}>
-        {Loading?<div className='pt-20 w-full'><LoadingSpin/></div>:null}
+    <div className={`overflow-x-hidden ${classes[0]}`}>
+        {Loading?<div className='pt-20'><LoadingSpin/></div>:null}
       {nothing ? <Nothing/>:
       <div className={` flex flex-col pt-24 mx-72 justify-center items-center relative postPage`}>
           {posts.map((ele)=>
             <div key={ele.id} className='container mx-72 mb-5 border grid grid-cols-2 postDetails'>
             <div className='bg-cover postImage' style={{backgroundImage:`url('${ele.imageURL}')`}}></div>
             <div className='px-5 pt-5 flex flex-col'>
-              <h3 className='text-4xl'>{ele.title}</h3>
-              {auther?<h4 className='text-md mb-5 pt-2'>{(!ele.name)?(userName):(ele.name)}</h4>:<h4 className='text-md mb-5'></h4>}
+              <h3 className='text-3xl text-slate-600'>{ele.title}</h3>
+              {auther?<h4 className='text-base text-gray-400 mb-5 pt-1'>{(!ele.name)?(userName):(ele.name)}</h4>:<h4 className='text-md mb-5'></h4>}
               <p className='pb-5'>{ele.description}</p>
                 {auther?(!ele.name)?(
                   <div className='flex justify-between mb-5 w-52'>
