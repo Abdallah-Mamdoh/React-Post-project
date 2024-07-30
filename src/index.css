@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+  
+
+@media screen and (max-width:700px) {
+    .postDetails{
+        display: flex;
+        flex-direction: column;
+    }
+    .postPage{
+        width: 60%;
+        margin-left: 22%;
+    }
+    .postImage{
+        height: 200px;
+    }
+    .addBtn{
+        right: 10px;
+    }
+    
+}
+@media screen and (min-width:700.999px) and (max-width:1400px) {
+    .postPage{
+        width: 60%;
+        margin-left: 22%;
+    }
+    
+}
