@@ -7,7 +7,7 @@ import Icon from 'react-icons-kit';
 
 
 
-export default function Register({form,errors,handleChange,handleConfirmation,handleEmail,handleFirstname,handleLastname,handlePass}) {
+export default function Register({form,errors,handleChange,handleConfirmation,handleEmail,handleFirstname,handleLastname,handlePass,profilePic,handleProfilePic}) {
     const [type , setType] = useState("password")
     const [icon,setIcon] = useState(eyeOff)
     const classes = useContext(classyContext)
@@ -63,6 +63,10 @@ export default function Register({form,errors,handleChange,handleConfirmation,ha
                       <label htmlFor="confirm-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
                       <input value={form.confirmation} onChange={(e)=>handleConfirmation(e.target.value)} type={type} name="confirm-password" id="confirm-password" placeholder="••••••••" className="mb-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
                       {errors.confirmation && <div><span className=' bg-red-400 rounded-md text-red-800 p-1 pl-2'>{errors.confirmation}</span></div>}
+                  </div>
+                  <div className="mb-5">
+                    <label htmlFor="URL" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Profile Picture</label>
+                    <input value={profilePic} onChange={(e)=>handleProfilePic(e.target.value)} type="text" id="URL" className="mb-3 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="image URL" />
                   </div>
                   <button type="submit" className="w-full text-white bg-blue-600 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"> Create an account</button>
                   <p className="text-sm font-light text-gray-500 dark:text-gray-400">

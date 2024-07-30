@@ -9,13 +9,14 @@ import EditPost from './Pages/EditPost';
 import ClassyContextFunc from './Context/ClassyContextFunc';
 import NotFound from './Pages/NotFound';
 import { toast } from "react-toastify";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import {auth} from "./firebase/firebase"
 import AuthDetailsContext from './Context/AuthDetailsContext';
 import * as Yup from 'yup';
 import { collection, deleteDoc, doc, getDocs, setDoc } from "firebase/firestore";
 import {database} from './firebase/firebase';
 import {v4 as uuid} from "uuid";
+import SignOut from './Components/SignOut';
 
 
 function App() {
@@ -28,6 +29,7 @@ function App() {
   const [nothing,setNothing] = useState(false)
   const [email,setEmail] = useState("")
   const [pass,setPass] = useState("")
+  const [profilePic,setProfilePic] =useState(null);
   const navigate = useNavigate();
  
   
@@ -142,6 +144,9 @@ const schema = Yup.object().shape({
     const handleConfirmation = (ele)=>{
         setForm({...form,confirmation:ele})
     }
+    const handleProfilePic = (ele)=>{
+      setProfilePic(ele)
+  }
 
   const handleChange = async (e)=>{
     e.preventDefault()
@@ -154,6 +159,7 @@ const schema = Yup.object().shape({
         await setDoc(docRef, {
           email : form.userEmail,
           Name: form.firstname + " " + form.lastname,
+          profilePic: profilePic
         })
         const querySnapshot = await getDocs(collection(database, 'users'));
         const dataList = querySnapshot.docs.map((doc) => doc.data());
@@ -178,6 +184,7 @@ const schema = Yup.object().shape({
   }
 
     }
+    console.log(profilePic);
 ////////////////////////////////////////////////////////////
 
 //Login
@@ -198,6 +205,7 @@ const handleLogin = (e)=>{
     const dataList = querySnapshot.docs.map((doc) => doc.data());
     const newList = dataList.filter((e)=>e.email == email)
     setUserName(newList[0].Name);
+    setProfilePic(newList[0].profilePic)
     navigate("/")
   }).catch((error)=>{
     toast.error("Wrong Email or password!");
@@ -208,15 +216,16 @@ console.log(userName);
 ////////////////////////////////////////////////////////////
 
 
+
   return (
     <div>
       <ClassyContextFunc>
       <AuthDetailsContext>
-      <NavBar></NavBar>
+      <NavBar profilePic={profilePic}></NavBar>
       <Routes>
         <Route path='/' element={<Home posts={posts} key={posts.id} handleDelete={handleDelete} form={form} handleEdit={handleEdit} userName={userName} Loading={Loading} nothing={nothing} />}></Route>
         <Route path='/login' element={<Login email={email} pass={pass} handleLogin={handleLogin} handleLoginEmail={handleLoginEmail} handleLoginPass={handleLoginPass} />}></Route>
-        <Route path='/register' element={<Register form={form} errors={errors} handleFirstname={handleFirstname} handleLastname={handleLastname} handleConfirmation={handleConfirmation} handleEmail={handleEmail} handlePass={handlePass} handleChange={handleChange} />}></Route>
+        <Route path='/register' element={<Register form={form} errors={errors} handleFirstname={handleFirstname} handleLastname={handleLastname} handleConfirmation={handleConfirmation} handleEmail={handleEmail} handlePass={handlePass} handleChange={handleChange} profilePic={profilePic} handleProfilePic={handleProfilePic} />}></Route>
         <Route path='/addPost' element={<AddPost posts={posts} key={posts.id}/>}></Route>
         <Route path='/editPost' element={<EditPost posts={posts} key={posts.id} handleEdit={handleEdit} editPost={editPost} editImage={editImage} editDescription={editDescription} editTitle={editTitle} handleSave={handleSave}/>}></Route>
         <Route path='*' element={<NotFound/>}></Route>

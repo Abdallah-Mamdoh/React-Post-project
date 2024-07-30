@@ -4,11 +4,12 @@ import { classyContext } from '../Context/ClassyContextFunc';
 import { AuthContext } from '../Context/AuthDetailsContext';
 import SignOut from './SignOut';
 
-export default function NavBar() {
+export default function NavBar({profilePic}) {
   const [state,setState] = useState(false)
   const classes = useContext(classyContext)
   const auther = useContext(AuthContext);  
-
+  
+console.log(profilePic);
   const handler = ()=>{
     if(state === false){
       setState(true)
@@ -40,8 +41,9 @@ export default function NavBar() {
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
         <div className="w-13 h-10 rounded-full flex justify-center">
           <div className='border-2 border-gray-800 bg-transparent rounded-full w-10 h-10 overflow-hidden relative flex justify-center'>
-          <i className={`fa-regular fa-user absolute text-gray-800 text-3xl top-2 h-10 ${classes[2]}`}></i>
+            {!profilePic?<i className={`fa-regular fa-user absolute text-gray-800 text-3xl top-2 h-10 ${classes[2]}`}></i>:<img src={profilePic} alt="img" />}
           </div>
+
         </div>
       </div>
       {auther?
